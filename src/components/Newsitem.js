@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Component } from "react";
+import React from "react";
 
-export class Newsitem extends Component {
+const Newsitem = (props)=> {
 
-    render() {
-        let { title, description, imgUrl, newsUrl, author, date, source } = this.props;
+        let { title, description, imgUrl, newsUrl, author, date, source } = props;
         return (
             <div className="my-3 container">
                 <div className="card mb-3 my-3" style={{ width: "100%" }}>
@@ -31,7 +30,6 @@ export class Newsitem extends Component {
                 </div>
             </div>
         );
-    }
 }
 
 export default Newsitem;
