@@ -10,7 +10,7 @@ const News = (props) => {
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [totalResults, settotalResults] = useState(0);
-    // document.title = `NewsBee - ${cap(props.category)}`;
+    
 
     const cap = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -31,14 +31,17 @@ const News = (props) => {
     }
 
     useEffect(() => {
+        document.title = `NewsBee - ${cap(props.category)}`;
         updateNews();
+        
+        // eslint-disable-next-line
     }, [])
     
 
     
     const fetchMoreData = async () => {
+        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
         setPage(page + 1)
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
         let data = await fetch(url);
         let parsedData = await data.json()
         setArticles(articles.concat(parsedData.articles));
@@ -48,7 +51,7 @@ const News = (props) => {
     
         return (
             <>
-                <h2 className="text-center" style={{ margin: "35px 0px" }}>NewsBee - Top {cap(props.category)} Headlines</h2>
+                <h2 className="text-center" style={{ margin: "35px 0px", marginTop: "90px" }}>NewsBee - Top {cap(props.category)} Headlines</h2>
                 {loading && <Spinner />}
                 <InfiniteScroll
                     dataLength={articles.length}
