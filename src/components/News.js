@@ -24,16 +24,20 @@ export class News extends Component {
             articles: [],
             loading: true,
             page: 1,
-            totalResults: 0,
+            totalResults: 0,    
         }
         document.title = `NewsBee - ${this.cap(this.props.category)}`;
     }
     async updateNews() {
+        this.props.setProgress(10);
         const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=770b8e4a116246f8b8145a275cf8ccf5&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({ loading: true });
         let data = await fetch(url);
+        this.props.setProgress(30); 
         let parsedData = await data.json();
+        this.props.setProgress(50);
         this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false });
+        this.props.setProgress(100);
     }
     async componentDidMount() {
         this.updateNews();
